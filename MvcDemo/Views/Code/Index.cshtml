@@ -1,0 +1,91 @@
+﻿@model IEnumerable<MvcDemo.Models.Code>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>代码管理</title>
+    <style type="text/css">
+        #tbList {
+            border: 1px solid #0094ff;
+            width: 600px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tbList th, td {
+                border: 1px solid #0094ff;
+                padding: 10px;
+            }
+
+        .tds {
+            border: none;
+            padding: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+    function del(Id)
+    {
+        if (confirm("是否删除?"))
+        {
+
+            eval("document.all.d" + Id + ".click()");
+        }
+    }
+    </script>
+
+    </head>
+    <body>
+        <p>
+            @Html.ActionLink("新建代码", "Create")
+        </p>
+        <table>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Memo)
+                </th>
+                <th></th>
+            </tr>
+
+        @foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Memo)
+                </td>
+                <td>
+                    @Html.ActionLink("修改", "Edit", new { id=item.Id }) |
+                  
+                    <a href="#" target="_self" onclick="del('@item.Id')">删除</a>
+                    @using (Html.BeginForm("Delete", "Code", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <span style="display:none">
+
+                            @Html.TextBox("Id", item.Id)
+                            <input type="submit" id="@ViewBag.id@item.Id.ToString()" value="Delete" />
+                        </span>
+                }
+                </td>
+            </tr>
+    }
+
+        </table>
+    </body>
+    </html>

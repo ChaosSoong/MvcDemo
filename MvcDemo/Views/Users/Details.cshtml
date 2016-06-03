@@ -1,0 +1,51 @@
+﻿@model MvcDemo.Models.Users
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>详细信息</title>
+</head>
+<body>
+    <fieldset>
+        <legend>详细信息</legend>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.UserName)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.UserName)
+        </div>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.PassWord)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.PassWord)
+        </div>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Sex)
+        </div>
+        <div class="display-field">
+           @if(Model.Sex=="1")
+           { 
+               <p>男</p>
+           }
+           else
+           { 
+        <p>女</p>
+           }
+        </div>
+    </fieldset>
+    <p>
+        @Html.ActionLink("修改", "Edit", new { UserCode = Model.UserCode }) |
+        @Html.ActionLink("返回用户列表", "Index")
+    </p>
+</body>
+</html>

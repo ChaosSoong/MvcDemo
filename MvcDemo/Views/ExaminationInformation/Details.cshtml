@@ -1,0 +1,46 @@
+﻿@model MvcDemo.Models.EIList
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.name-详细信息</title>
+</head>
+<body>
+    <fieldset>
+        <legend>@ViewBag.name-详细信息</legend>
+    
+        
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.DisciplineName)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.DisciplineName)
+        </div>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.ExaminationTime)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.ExaminationTime)
+        </div>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Fraction)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Fraction)
+        </div>
+    </fieldset>
+    <p>
+        @Html.ActionLink("修改", "Edit", new { id=Model.Id }) |
+        @Html.ActionLink("返回上一级", "Index?Id=" + Model.StudentId)
+    </p>
+</body>
+</html>

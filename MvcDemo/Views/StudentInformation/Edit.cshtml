@@ -1,0 +1,73 @@
+﻿@model MvcDemo.Models.StudentInformation
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>修改</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+    
+        <fieldset>
+            <legend>修改学生信息</legend>
+    
+            @Html.HiddenFor(model => model.Id)
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Sex)
+            </div>
+            <div class="editor-field">
+                @*@Html.EditorFor(model => model.Sex)*@
+                @Html.RadioButtonFor(model => model.Sex, "1", new { @id = "radio1", @name = "Status" })<label>男</label>
+                @Html.RadioButtonFor(model => model.Sex, "0", new { @id = "radio2", @name = "Status" })<label>女</label>
+                @Html.ValidationMessageFor(model => model.Sex)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Department)
+            </div>
+            <div class="editor-field">
+                @*@Html.EditorFor(model => model.Department)*@
+                @Html.DropDownListFor(model => model.Department, ViewBag.DepartmentCode as IEnumerable<SelectListItem>, new { @style = "width:150px;" })
+                @Html.ValidationMessageFor(model => model.Department)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.EntranceTime)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.EntranceTime)
+                @Html.ValidationMessageFor(model => model.EntranceTime)
+            </div>
+    
+            <p>
+                <input type="submit" value="保存" />
+            </p>
+        </fieldset>
+    }
+    
+    <div>
+        @Html.ActionLink("返回学生列表", "Index")
+    </div>
+</body>
+</html>

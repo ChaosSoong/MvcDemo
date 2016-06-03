@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "登陆";
+}
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        用户名：@Html.TextBox("UserCode")
+        <br />
+        密&nbsp;&nbsp;&nbsp;&nbsp;码：@Html.Password("PassWord")
+        <br />
+        <input type="submit" value="登陆" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="javascript:self.location.href='./'">取消</button>
+    <br />
+        <font color="red"> @ViewBag.Err</font>
+    </p>
+}
+

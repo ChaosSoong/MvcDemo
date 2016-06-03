@@ -1,0 +1,149 @@
+﻿@model IEnumerable<MvcDemo.Models.STList>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>学生列表</title>
+    <style type="text/css">
+        #tbList {
+            border: 1px solid #0094ff;
+            width: 600px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tbList th, td {
+                border: 1px solid #0094ff;
+                padding: 10px;
+            }
+             .tds {
+            border:none;
+            padding:5px;
+        }
+    </style>
+    <script type="text/javascript">
+        function del(Id)
+        {
+            if (confirm("是否删除?"))
+            {
+
+                eval("document.all.d" + Id + ".click()");
+            }
+        }
+        function Details(id)
+        {
+            self.location.href = "./StudentInformation/Details/" + id;
+        }
+        function show(id)
+        {
+            self.location.href = "./ExaminationInformation/Index/"+id;
+        }
+    </script>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("加入新同学", "Create") | @Html.ActionLink("用户管理", "Index", "Users")
+        @using (Html.BeginForm("Index", "StudentInformation", FormMethod.Get))
+        {
+        <p>
+            系别: @Html.DropDownList("Dp", "All")
+            姓名: @Html.TextBox("SearchString") 
+                <input type="submit" value="查询" />
+        </p>
+        }
+    </p>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntranceTime)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Sex)*@
+                @if (item.Sex == "1")
+                {
+                    <p>男</p>
+                }
+                else
+                {
+                    <p>女</p>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntranceTime)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
+                <table>
+                    <tr>
+                        <td class="tds">
+                            @* @Html.ActionLink("Details", "Details", new { UserCode = item.UserCode })*@
+                            <input type="button" style="width:100px;height:30px" onclick="show('@item.Id')" value="成绩查询" />
+                        </td>
+                        <td class="tds"> |</td>
+                        <td class="tds">
+                            @using (Html.BeginForm("Edit", "StudentInformation", FormMethod.Get))
+                            {
+                                <span style="display:none"> @Html.TextBox("Id", item.Id)</span>
+                                <input type="submit" value="修改" />
+                            }
+                        </td>
+                        <td class="tds">
+                            |
+                        </td>
+                        <td class="tds">
+                            @* @Html.ActionLink("Details", "Details", new { UserCode = item.UserCode })*@
+                            <input type="button" style="width:100px;height:30px" onclick="Details('@item.Id')" value="查看详细信息" />
+                        </td>
+                        <td class="tds"> |</td>
+                        <td class="tds">
+                            @*@Html.ActionLink("Delete", "Delete", new { id=item.UserCode })*@
+
+                            <input type="button" style="width:40px;height:30px" onclick="del('@item.Id')" value="删除" />
+                            @using (Html.BeginForm("Delete", "StudentInformation", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <span style="display:none">
+
+                                    @Html.TextBox("Id", item.Id)
+                                    <input type="submit" id="@ViewBag.id@item.Id.ToString()" value="Delete" />
+                                </span>
+                            }
+                        </td>
+                     
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

@@ -1,0 +1,83 @@
+﻿@model MvcDemo.Models.Register
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>创建用户</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+    
+        <fieldset>
+            <legend>新用户注册</legend>
+    <div>@if(ViewBag.uc!=null)
+         { 
+             <p>@ViewBag.uc</p>
+         }
+             </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.UserName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.UserName)
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.UserCode)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.UserCode)
+                @Html.ValidationMessageFor(model => model.UserCode)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PassWord)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.PassWord)
+                @Html.ValidationMessageFor(model => model.PassWord)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ConfirmPassword)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.ConfirmPassword)
+                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Sex)
+            </div>
+            <div class="editor-field">
+                @*@Html.EditorFor(model => model.Sex)*@
+                @Html.RadioButtonFor(model => model.Sex, "1", new { @id = "radio1", @name = "Status" })<label>男</label>
+                @Html.RadioButtonFor(model => model.Sex, "0", new { @id = "radio2", @name = "Status" })<label>女</label>
+                @*@Html.RadioButton("男","1",true)*@
+                @Html.ValidationMessageFor(model => model.Sex)
+            </div>
+    
+            <p>
+                <input type="submit" value="注册" />
+            </p>
+        </fieldset>
+    }
+    
+    <div>
+        @Html.ActionLink("返回用户列表", "Index")
+    </div>
+    
+</body>
+</html>

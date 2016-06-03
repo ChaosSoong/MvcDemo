@@ -1,0 +1,70 @@
+﻿@model MvcDemo.Models.ExaminationInformation
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.name-成绩编辑</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+    
+        <fieldset>
+            <legend>@ViewBag.name-成绩编辑</legend>
+    
+            @Html.HiddenFor(model => model.Id)
+    
+            <div style="display:none">
+                @Html.LabelFor(model => model.StudentId)
+            </div>
+            <div style="display:none">
+                @Html.EditorFor(model => model.StudentId)
+                @Html.ValidationMessageFor(model => model.StudentId)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Discipline)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Discipline, ViewBag.DisciplineCode as IEnumerable<SelectListItem>, new { @style = "width:150px;" })
+                @Html.ValidationMessageFor(model => model.Discipline)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ExaminationTime)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.ExaminationTime)
+                @Html.ValidationMessageFor(model => model.ExaminationTime)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Fraction)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Fraction)
+                @Html.ValidationMessageFor(model => model.Fraction)
+            </div>
+    
+            <p>
+                <input type="submit" value="保存" />
+            </p>
+        </fieldset>
+    }
+    
+    <div>
+        <a target="_self" href="~/ExaminationInformation/Index/@ViewBag.studentId">返回成绩列表</a>
+    </div>
+</body>
+</html>

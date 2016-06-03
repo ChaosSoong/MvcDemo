@@ -1,0 +1,129 @@
+﻿@model IEnumerable<MvcDemo.Models.Users>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style type="text/css">
+        #tbList {
+            border: 1px solid #0094ff;
+            width: 600px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tbList th, td {
+                border: 1px solid #0094ff;
+                padding: 10px;
+            }
+        .tds {
+            border:none;
+            padding:5px;
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>用户列表</title>
+    <script type="text/javascript">
+        function del(UserCode)
+        {
+            if (confirm("是否删除?"))
+            {
+                
+                eval("document.all." + UserCode + ".click()");
+            }
+        }
+        function Details(UserCode)
+        {
+            self.location.href = "./Users/Details/" + UserCode;
+        }
+    </script>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("创建新用户", "Create") | @Html.ActionLink("学生管理", "Index", "StudentInformation")
+    </p>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PassWord)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sex)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserCode)
+            </td>
+            <td>
+               ******
+            </td>
+            <td>
+               @if (item.Sex == "1")
+               {
+                   <p>男</p>
+               }
+               else
+               {
+                <p>女</p>
+               }
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { UserCode = item.UserCode }) |*@
+                <table>
+                    <tr>
+                        <td class="tds">
+                            @using (Html.BeginForm("Edit", "Users", FormMethod.Get))
+                            {
+                                <span style="display:none"> @Html.TextBox("UserCode", item.UserCode)</span>
+                                <input type="submit" value="修改" />
+                            }
+                        </td>
+                        <td class="tds">
+                            |
+                        </td>
+                        <td class="tds">
+                           @* @Html.ActionLink("Details", "Details", new { UserCode = item.UserCode })*@
+                            <input type="button" style="width:100px;height:30px" onclick="Details('@item.UserCode')" value="查看详细信息" />
+                        </td>
+                        <td class="tds"> |</td>
+                        <td class="tds">
+                            @*@Html.ActionLink("Delete", "Delete", new { id=item.UserCode })*@
+
+                            <input type="button" style="width:40px;height:30px" onclick="del('@item.UserCode')" value="删除" />
+                            @using (Html.BeginForm("Delete", "Users", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <span style="display:none">
+
+                                    @Html.TextBox("UserCode", item.UserCode)
+                                    <input type="submit" id="@item.UserCode" value="Delete" />
+                                </span>
+                            }
+                        </td> 
+</tr>
+                </table>
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

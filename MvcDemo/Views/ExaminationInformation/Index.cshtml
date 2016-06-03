@@ -1,0 +1,123 @@
+﻿@model IEnumerable<MvcDemo.Models.EIList>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.name-考试成绩列表</title>
+    <style type="text/css">
+        #tbList {
+            border: 1px solid #0094ff;
+            width: 600px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tbList th, td {
+                border: 1px solid #0094ff;
+                padding: 10px;
+            }
+
+        .tds {
+            border: none;
+            padding: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        function del(UserCode)
+        {
+            if (confirm("是否删除?"))
+            {
+
+                eval("document.all.d" + UserCode + ".click()");
+            }
+        }
+        function Details(UserCode)
+        {
+            self.location.href = "../Details/" + UserCode;
+        }
+       
+    </script>
+</head>
+<body>
+    <p>
+        <a target="_self" href="../Create/@ViewBag.id">添加考试成绩</a> | @Html.ActionLink("学生管理", "Index", "StudentInformation")
+           </p>
+    <table>
+        <tr>
+            <th style="display:none">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisciplineName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExaminationTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fraction)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td style="display:none">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisciplineName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExaminationTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fraction)
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td class="tds">
+                            @using (Html.BeginForm("Edit", "ExaminationInformation", FormMethod.Get))
+                            {
+                                
+                                <span style="display:none"> <input type="text" id="Id" name="Id" value="@Html.DisplayFor(modelItem => item.Id)" /></span>
+                                <input type="submit" value="修改" />
+                            }
+                        </td>
+                        <td class="tds">
+                            |
+                        </td>
+                        <td class="tds">
+                            @* @Html.ActionLink("Details", "Details", new { UserCode = item.UserCode })*@
+                            <input type="button" style="width:100px;height:30px" onclick="Details('@Html.DisplayFor(modelItem => item.Id)')" value="查看详细信息" />
+                        </td>
+                        <td class="tds"> |</td>
+                        <td class="tds">
+                            @*@Html.ActionLink("Delete", "Delete", new { id=item.UserCode })*@
+
+                            <input type="button" style="width:40px;height:30px" onclick="del('@Html.DisplayFor(modelItem => item.Id)')" value="删除" />
+                            @using (Html.BeginForm("Delete", "ExaminationInformation", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <span style="display:none">
+                                    @*@Html.TextBox("StudentId", item.StudentId)*@
+                                    <input type="text" id="Id" name="Id" value="@Html.DisplayFor(modelItem => item.Id)" />
+                                    ><input type="submit" id="@ViewBag.cid@item.Id" value="Delete" />
+                                </span>
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

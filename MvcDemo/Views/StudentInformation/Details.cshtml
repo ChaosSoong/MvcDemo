@@ -1,0 +1,59 @@
+﻿@model MvcDemo.Models.STList
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>学生列表</title>
+</head>
+<body>
+    <fieldset>
+        <legend>学生列表</legend>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Name)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Name)
+        </div>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Sex)
+        </div>
+        <div class="display-field">
+            @*@Html.DisplayFor(model => model.Sex)*@
+            @if (Model.Sex == "1")
+            {
+                <p>男</p>
+            }
+            else
+            {
+                <p>女</p>
+            }
+        </div>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.DepartmentName)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.DepartmentName)
+        </div>
+    
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.EntranceTime)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.EntranceTime)
+        </div>
+    </fieldset>
+    <p>
+        @Html.ActionLink("修改", "Edit", new { id=Model.Id }) |
+        @Html.ActionLink("返回学生列表", "Index")
+    </p>
+</body>
+</html>
